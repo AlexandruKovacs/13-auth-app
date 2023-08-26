@@ -51,7 +51,7 @@ export class AuthService {
     const token = localStorage.getItem('token');
 
     if (!token) {
-      this._authStatus.set( AuthStatus.notAuthenticated );
+      this.logout();
       return of(false);
     }
 
