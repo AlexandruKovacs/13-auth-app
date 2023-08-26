@@ -1,1 +1,5 @@
-<router-outlet></router-outlet>
+<h1 *ngIf="!finishedChecking()">
+  Loading...
+</h1>
+
+<router-outlet *ngIf="finishedChecking()"></router-outlet>

@@ -21,7 +21,9 @@ export class AuthService {
   public currentUser = computed( () => this._currentUser() );
   public authStatus = computed( () => this._authStatus() );
 
-  constructor() { }
+  constructor() {
+    this.checkAuthStatus().subscribe();
+  }
 
   private setAuthStatus( user: User, token: string ): boolean {
 

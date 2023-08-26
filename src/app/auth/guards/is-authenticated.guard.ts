@@ -12,6 +12,10 @@ export const isAuthenticatedGuard: CanActivateFn = (route, state) => {
     return true;
   }
 
+  if (authService.authStatus() === AuthStatus.checking) {
+    return false;
+  }
+
   const url = state.url;
   localStorage.setItem('redirectUrl', url);
 
