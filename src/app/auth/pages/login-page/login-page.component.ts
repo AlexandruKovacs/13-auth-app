@@ -2,6 +2,8 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 
+import Swal from 'sweetalert2';
+
 @Component({
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.css']
@@ -12,8 +14,8 @@ export class LoginPageComponent {
   private authService = inject( AuthService );
 
   public loginForm = this.fb.group({
-    email: ['', [ Validators.required, Validators.email ]],
-    password: ['', [ Validators.required, Validators.minLength(6) ]]
+    email: ['alex@google.es', [ Validators.required, Validators.email ]],
+    password: ['1234567', [ Validators.required, Validators.minLength(6) ]]
   });
 
   login() {
@@ -21,8 +23,15 @@ export class LoginPageComponent {
 
     if (email !== null && email !== undefined && password !== null && password !== undefined) {
       this.authService.login(email, password)
-        .subscribe(success => {
-          console.log(success);
+        .subscribe({
+          next: () => console.log("Login success"),
+          error: (message) => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: message
+            });
+          }
         });
     } else {
       console.error("Email and password must have valid values.");
