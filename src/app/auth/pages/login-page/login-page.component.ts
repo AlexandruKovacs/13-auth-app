@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   templateUrl: './login-page.component.html',
@@ -8,6 +9,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 export class LoginPageComponent {
 
   private fb = inject( FormBuilder );
+  private authService = inject( AuthService );
 
   public loginForm = this.fb.group({
     email: ['', [ Validators.required, Validators.email ]],
@@ -15,7 +17,16 @@ export class LoginPageComponent {
   });
 
   login() {
-    console.log( this.loginForm.value );
+    const { email, password } = this.loginForm.value;
+
+    if (email !== null && email !== undefined && password !== null && password !== undefined) {
+      this.authService.login(email, password)
+        .subscribe(success => {
+          console.log(success);
+        });
+    } else {
+      console.error("Email and password must have valid values.");
+    }
   }
 
 }
