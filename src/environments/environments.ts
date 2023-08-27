@@ -1,5 +1,5 @@
 export const environment = {
 
-  baseUrl: 'http://localhost:3000',
+  baseUrl: 'https://nest-backend-alexandru-kovacs.up.railway.app',
 
 };
